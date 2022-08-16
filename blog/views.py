@@ -8,20 +8,21 @@ from django.views.generic.base import View
 #     elif request.method == 'GET':
 #         return HttpResponse('Good')
 
-from .models import Category
+from . import models
 
 
 class HomeView(View):
     '''Home page'''
 
     def get(self, request):
-        category_list = Category.objects.all()
-        return render(request, 'blog/home.html', {'categories': category_list})
+        posts = models.Post.objects.all()
+        return render(request, 'blog/home.html', {'posts': posts})
 
 
-class CategoryView(View):
+class PostView(View):
     '''Вывод статей категории'''
 
-    def get(self, request, category_name):
-        category = Category.objects.get(slug=category_name)
-        return render(request, 'blog/post_list.html', {'categoty': category})
+
+    def get(self, request, post_name):
+        post = models.Post.objects.get(slug=post_name)
+        return render(request, 'blog/post_list.html', {'information': post})
